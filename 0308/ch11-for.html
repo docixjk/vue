@@ -14,8 +14,8 @@
   <div id="app">
     <ul>
       <!-- 변수 in Vue data 안의 정보 :  in , of 둘다 되는데 in을 많이 쓴다 -->
-      <li v-for="item in myArray">
-        {{item}}
+      <li v-for="(item, idx) in myArray">
+        {{item}} : {{idx}}
       </li>
     </ul>
     <ul>
