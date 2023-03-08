@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>lazy , number , trim</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+  <div id="yedam">
+    <!-- lazy , number , trim-->
+
+    <!-- lazy -->
+    <input v-model="myText1"> <!-- 그냥 : 실시간으로 적용 -->
+    <p>입력 후 표시 {{myText1}}</p>
+    <input v-model.lazy="myText2"> <!-- lazy 사용 : 입력이 모두 끝나야 적용 -->
+    <p>입력 후 표시 {{myText2}}</p>
+
+    <hr>
+    <!-- number -->
+    <input v-model.number="myNumber" type="number">
+    <p>100을 더해서 표시 {{100 + myNumber}}</p>
+
+    <hr>
+    <!-- trim -->
+    <input v-model.trim="myText3">
+    <p>앞뒤 공백 제거 : {{myText3}}</p>
+  </div>
+  <script>
+    new Vue({
+      el: '#yedam',
+      data: {
+        myText1: '',
+        myText2: '',
+        myNumber: 0,
+        myText3: ''
+      }, methods: {
+      }
+    })
+  </script>
+</body>
+
+</html>

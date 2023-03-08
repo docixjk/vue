@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>간단한 계산기</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <h1>간단한 계산기</h1>
+    <br>
+    <input v-model.number="a">
+    <input v-model.number="b">
+    <br>
+    <button @click="sum">덧셈계산</button>
+    <button @click="bbel">뺄셈계산</button>
+    <button @click="gob">곱셈계산</button>
+    <button @click="nanu">나눗셈계산</button>
+    <p>결과는 {{result}} 입니다.</p>
+    <button @click="countUp(10)">10씩 증가</button>
+    <button @click="countUp(100)">100씩 증가</button>
+    <button @click="countUp(1000)">1000씩 증가</button>
+    <p>{{count}}</p>
+  </div>
+  <script>
+    new Vue({
+      el: '#app',
+      data: {
+        a: 10,
+        b: 10,
+        result: 0,
+        count: 0
+      }, methods: {
+        // this 를 사용하는 것은 Vue 선언 한 data 내의 값에 접근하는거
+        sum: function () {
+          this.result = this.a + this.b;
+        },
+        bbel: function () {
+          this.result = this.a - this.b;
+        },
+        gob: function () {
+          this.result = this.a * this.b;
+        },
+        nanu: function () {
+          this.result = this.a / this.b;
+        },
+        countUp: function (val) {
+          this.count += val;
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>V-model 해보자</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.0"></script>
+</head>
+<style>
+  img {
+    width: 500px;
+    height: 500px;
+  }
+</style>
+
+<body>
+  <div id="app">
+    <!-- v-model 로 data 쪽으로 보낼 수 있다. -->
+    <input type="text" v-model="myName" placeholder="이름">
+    <p>나는 {{myName}} 입니다.</p>
+
+    <textarea v-model="myText"></textarea>
+    <p>문장 : {{myText}}</p>
+    <p>문자수 : {{myText.length}}</p>
+    <hr>
+    <h3>checkbox로 해보자</h3>
+    <label>
+      <input type="checkbox" v-model="myCheck">
+      체크박스의 상태 : {{myCheck}}
+    </label>
+    <br>
+    <!-- 복수로 체크박스를 사용하고 싶을때 -->
+    <label>
+      <input type="checkbox" v-model="myChecks" value="피바다">
+      피바다
+    </label>
+    <br>
+    <label>
+      <input type="checkbox" v-model="myChecks" value="들판">
+      들판
+    </label>
+    <br>
+    <label>
+      <input type="checkbox" v-model="myChecks" value="파란하늘">
+      파란하늘
+    </label>
+    <p>선택한 색 : {{myChecks}}</p>
+
+    <label>
+      <input type="checkbox" v-model="myAgree">
+      유 동의?
+    </label>
+    <!-- 체크 유무에 따라서 버튼 상태 바뀜-->
+    <button v-bind:disabled="myAgree == false">송신</button>
+    <button v-bind:disabled="!myAgree">송신</button>
+    <hr>
+    <h3>radio로 해보자</h3>
+    <label>
+      <input type="radio" value="붉은노을" v-model="picked">
+      붉은노을
+    </label>
+    <br>
+    <label>
+      <input type="radio" value="녹색현상" v-model="picked">
+      녹색현상
+    </label>
+    <br>
+    <label>
+      <input type="radio" value="초사이어인머리색" v-model="picked">
+      초사이어인머리색
+    </label>
+
+    <p>{{picked}} 선택</p>
+
+    <label>
+      <input type="radio" value="양파쿵야1.jpg" v-model="fileName">
+      양파쿵야1.jpg
+    </label><br>
+    <label>
+      <input type="radio" value="양파쿵야2.jpg" v-model="fileName">
+      양파쿵야2.jpg
+    </label><br>
+    <label>
+      <input type="radio" value="양파쿵야3.jpg" v-model="fileName">
+      양파쿵야3.jpg
+    </label>
+    <p>선택한 이미지를 볼 수 있습니다.</p>
+    <img v-bind:src="fileName">
+    <hr>
+
+  </div>
+  <script>
+    new Vue({
+      el: '#app',
+      data: {
+        myName: '',
+        myText: '',
+        myCheck: false,
+        myChecks: [],
+        myAgree: false,
+        picked: 'red',
+        fileName: '양파쿵야1.jpg'
+      }
+    })
+  </script>
+</body>
+
+</html>

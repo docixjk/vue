@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>if 문</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <label>
+      <input type="checkbox" v-model="myVisible">표시
+    </label>
+    <!-- true 이면 체크 박스는 안보이고 false면 보일 것이다-->
+    <p v-show="myVisible">쇼박스 ON</p><!-- 숨기는거 -->
+    <p v-if="myVisible">체크박스 ON</p><!-- 조건에 만족하지 않으면 지워버림-->
+    <p v-else>체크박스 OFF</p>
+    <!-- 내용이 많으면 show 내용이 적다면 if-->
+    <button v-if="isShow" @click="poo">메롱</button>
+
+    <hr>
+    <template v-if="type=='A'">
+      <h1>template titles</h1>
+      <p>template p tag</p>
+    </template>
+    <template v-else>
+      <h1>elsetemplate titles</h1>
+      <p>else template p tag</p>
+    </template>
+
+    <hr>
+    <p v-if="type=='A'">A</p>
+    <p v-else-if="type=='B'">B</p>
+    <p v-else-if="type=='C'">C</p>
+    <p v-else>[ 그냥 : {{type}} ] / [그냥+eleses : {{type+elsess}}]</p>
+    <input v-model="type"><!-- 변수명 선언-->
+  </div>
+  <script>
+    new Vue({
+      el: '#app',
+      data: {
+        myVisible: false, // 보이는 않는 상태
+        isShow: true, // 보이는 상태
+        type: ''
+      }, methods: {
+        poo: function () {
+          this.isShow = false
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>

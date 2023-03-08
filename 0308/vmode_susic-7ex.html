@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>test-1</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    이름 : <input v-model.lazy="myName">
+    <br><br>
+    <label>
+      <input type="radio" value="파란색" v-model="myColors">
+      파란색
+    </label>
+    <br>
+    <label>
+      <input type="radio" value="초록색" v-model="myColors">
+      초록색
+    </label>
+    <br>
+    <label>
+      <input type="radio" value="검은색" v-model="myColors">
+      검은색
+    </label><br>
+    <p>내 이름은 {{myName}} 이고 좋아하는 색은 {{myColors}} 입니다</p>
+  </div>
+  <script>
+    new Vue({
+      el: '#app',
+      data: {
+        myName: '',
+        myColors: '파란색'
+      }
+    })
+  </script>
+</body>
+
+</html>

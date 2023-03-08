@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>데이터 표시하는 방법</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.0"></script>
+</head>
+
+<body>
+  <div id="app">
+    <!-- Mustache 콧수염 -->
+    <!-- {{  }} 사용할 변수명을 넣어준다 -->
+    <p>{{myText}}</p> <!-- 안 -->
+    <!-- v-text 속성 Vue에 선언한 변수명을 담아 속성으로 준다 -->
+    <!-- 문자로 인식 -->
+    <p v-text="myText"></p> <!-- innerText -->
+    <!-- 태그가 존재하면 태그로 인식 -->
+    <p v-html="myText"></p> <!-- innerHTML -->
+    <hr>
+    <!-- 디렉티브 v-text , v-html , v-on ... 라고 하는 것-->
+    <button v-on:click="changeText">변경</button>
+  </div>
+  <p>{{myText}}</p> <!-- 밖 -->
+  <script>
+    // VUE를 붙인 태그 내에서만 사용할 수 있음 벗어나면 안됨
+    new Vue({
+      // app이란 아이디를 가진 녀석에게 VUE를 붙여서 쓰겠다는 거임
+      el: '#app',
+      data: { // {{ }} 안에 들어가게될 변수명을 지정해서 쓰겠다..
+        myText: '<button type="button">추가</button>'
+      },
+      methods: {
+        changeText: function () {
+          this.myText = `<button type="button">추가</button>`;
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>

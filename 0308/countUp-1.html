@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>어케쓰는지 보자</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.0"></script>
+</head>
+
+<body>
+  <h2>클릭하면 카운터가 올라갑니다</h2>
+  <div id="app">
+    <p>{{count}}회</p>
+    <!-- 데이터 바인딩
+          스크립트 부분에서 사용 선언후 data 부분을 연결시킴-->
+    <button v-on:click="countUp">카운터</button>
+    <input type="text" v-model="temp">
+    <p>{{temp}}</p>
+  </div>
+</body>
+<script>
+  new Vue({
+    el: "#app", // div id인 app
+    data: {
+      count: 0,
+      temp: ""
+    },
+    methods: {
+      countUp: function () {
+        this.count++;
+      }
+    }
+  })
+</script>
+
+</html>

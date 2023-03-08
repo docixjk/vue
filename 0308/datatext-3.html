@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ }} 을 사용해보자</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.0"></script>
+</head>
+
+<body>
+  <!-- 숫자, 문자, 불리언-->
+  <div id="app">
+    <!-- 바로 연산, 메소드 사용도 가능하다 -->
+    <p>{{myNumber * 1.08}}</p>
+    <p>{{myText.substr(0,1) + " 문자열 자름"}}</p>
+    <p>{{!myBool}}</p>
+
+    <!-- 배열 의 인덱스값도 가져올 수 있다-->
+    <p>배열 {{myArray}}</p>
+    <p>배열 {{myArray[0]}}</p>
+
+    <!-- 오브젝트 -->
+    <p>오브젝트 {{myObj}}</p>
+    <p>오브젝트 {{myObj[0].price}} {{myObj[1].name}}</p>
+  </div>
+  <script>
+    new Vue({
+      el: '#app',
+      data: {
+        myNumber: 12345,
+        myText: "abc",
+        myBool: true,
+        myArray: ['서나', '서기', '동쿤', '길동', '찬짱'],
+        myObj: [
+          { name: '모찌', price: 9999 },
+          { name: '모찌모찌', price: 9999 },
+          { name: '모찌찌모', price: 9999 },
+        ]
+      },
+      methods: {
+
+      }
+    })
+  </script>
+</body>
+
+</html>
