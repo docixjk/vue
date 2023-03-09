@@ -43,8 +43,6 @@
       data: {
         header: headerData,
         ranking: rankingDate
-      }, methods: {
-
       }
     })
   </script>
@@ -99,14 +97,23 @@
         {{item}}
       </li>
     </ul>
-    <button @clink="sortData(myArray)">정렬</button>
+    <button @click="sortData(myArray)">정렬</button>
+
+    <ul>
+      <li v-for="item in youArray">
+        <!-- 배열 데이터를 나열 -->
+        {{item}}
+      </li>
+    </ul>
+    <button @click="sortData(youArray)">정렬</button>
   </div>
 
   <script>
     new Vue({
       el: '#app3',
       data: {
-        myArray: ['one', 'two', 'three', 'four', 'five']
+        myArray: ['one', 'two', 'three', 'four', 'five'],
+        youArray: [5, 2626, 263, 7457, 53262345, 2345, 2352, 673, 234, 14, 6346]
       }, methods: {
         sortData: function (dataList) {
           dataList.sort(function (a, b) {
@@ -118,10 +125,10 @@
             // a < b return - 1
 
             // 오름차순
-            return (a < b ? -1 : 1);
+            // return (a < b ? -1 : 1);
 
             // 내림차순
-            // return (a > b ? -1 : 1);
+            return (a > b ? -1 : 1);
           })
         }
       }

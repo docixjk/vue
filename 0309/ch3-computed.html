@@ -23,14 +23,16 @@
       data: {
         myText: '안녕하셔유 VUE.js를 사용할꺼예유~',
         myPrice: 50
-      }, methods: {
-
-      },
+      }
     })
   </script>
 
   <hr>
+  <!-- 따라서 computed 는 데이터의 변경에 반응하여, 특정 값을 반환해주는 일종의 getter 함수이며
 
+watch 는 computed 와 비슷하지만 특정 데이터가 변경되었을 때 지정한 callback 함수를 실행하는,
+
+즉 사용 목적이 다른 속성이다. -->
   <div id="app2">
     <input type="number" v-model.number="price"> 원 X
     <input type="number" v-model.number="count"> 개
