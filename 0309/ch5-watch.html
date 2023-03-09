@@ -11,10 +11,14 @@
 
 <body>
   <div id="app">
+    <!-- 금지어 변수 선언 -->
     <p>금지 문자는 {{forbiddentText}}</p>
+    <!-- 문자 입력받기 위한 v-model 변수 선언-->
     <textarea v-model="inputText"></textarea>
     <br>
+    <!-- 시간에 사용할 변수 선언-->
     <p>앞으로 {{restSec}}</p>
+    <!-- 시간 시작할 함수 선언-->
     <button v-on:click="startTimer">START</button>
   </div>
   <script>
@@ -50,9 +54,14 @@
         },
         inputText: function () {
           // 실시간으로 확인하려고 indexOf 씀
+          // inputText(textarea) 값 중에서 forbiddentText(금지어)를 검색한다.
+          // 예를들어 '더워' 라는 키워드가 있다면 좌, 우가 어떻든 찾는다
           var pos = this.inputText.indexOf(this.forbiddentText);
+          // 찾았다면 pos 는 1이상일 것이다
           if (pos >= 0) {
+            // 금지어를 띄어주고 
             alert(this.forbiddentText + "는 입력할 수 없습니다.");
+            // inputText 값에서 pos(금지어)만큼 잘라낸다.
             this.inputText = this.inputText.substr(0, pos);
           }
         }
