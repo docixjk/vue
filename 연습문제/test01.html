@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>연습문제 1</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+  <h1>내가 푼거</h1>
+  <div id="test">
+    <h2>제한 시간내에 문자 입력하기</h2>
+    금지문자 ( ,로 나누어 복수입력 가능 )
+    <input type="text" v-model="forbiddentText" v-bind:disabled="isWritable"><br>
+    제한시간을 입력하세요(초)
+    <input type="number" v-model.number="setSec" v-bind:disabled="isWritable">
+    <button v-on:click="startTimer" v-bind:disabled="isWritable">시작</button>
+    <p v-if="visibled == false">남은시간 : {{setSec}}초</p>
+    <p v-else>남은시간 : {{restSec}}초</p>
+    <textarea v-model="inputText"></textarea>
+    <p v-if="restSec!=0">0개의 문자를 입력하였습니다.</p>
+    <p v-else>{{inputText.length}}개의 문자를 입력하였습니다.</p>
+    <p>벌점 : {{score}}, 횟수 : {{count}} (금지문자 1개당 12점)</p>
+  </div>
+  <script>
+    new Vue({
+      el: '#test',
+      data: {
+        forbiddentText: '금지어입력',
+        setSec: 0,
+        restSec: 0,
+        inputText: '',
+        timerObj: null,
+        score: 0,
+        visibled: false,
+        isWritable: false,
+        textArray: [],
+        count: 0
+      }, methods: {
+        startTimer: function () {
+          this.textArray = this.forbiddentText.split(",");
+          this.isWritable = true;
+          this.visibled = true;
+          clearInterval(this.timerObj)
+          this.restSec = this.setSec;
+          this.timerObj = setInterval(() => {
+            this.restSec--;
+          }, 1000);
+        }
+      }, watch: {
+        restSec: function () {
+          if (this.restSec <= 0) {
+            alert('제한 시간 입니다.');
+            clearInterval(this.timerObj);
+          }
+        },
+        inputText: function () {
+          for (let i = 0; i < this.textArray.length; i++) {
+            var pos = this.inputText.indexOf(this.textArray[i]);
+            if (pos >= 0) {
+              this.inputText = this.inputText.substr(0, pos);
+              this.count++;
+              this.restSec += 10;
+            }
+          }
+          return this.score = this.count * 12;
+        }
+      }
+    })
+  </script>
+
+  <hr>
+  <h1>교수님꺼</h1>
+
+
+
+</body>
+
+</html>
