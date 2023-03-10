@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>컴포넌트 첫번째</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+  <!-- html은 대소문자가 구문이 안되니까 카멜을 쓴다 my_ddd => MyDdd 로 표현이 된다. -->
+  <h1>컴포넌트를 만들어서 표시하는 예제</h1>
+  <div id="app">
+    <!-- 부품을 어디에 만들것이냐 -->
+    <my-component></my-component>
+  </div>
+  <script>
+    // 컴포넌트 생성 -> 재사용이 용이 , 렌더링 시간이 줄어든다
+    // 원하는 곳 어디든 넣기 편하다
+    const MyComponent = {
+      // Vue 선언한 것처럼 내용도 비슷하게 할 수 있다 .( 분해해서 넣는다 ? )
+      template: `
+        <p class='my-comp'>
+          카운터
+          <button @click='addOne'>추가</button>
+          {{count}}
+        </p>
+      `,
+      data: function () {
+        return {
+          // 변수 : 값
+          count: 0
+        }
+      },
+      methods: {
+        addOne: function () {
+          this.count++;
+        }
+      },
+    };
+
+    new Vue({
+      el: '#app',
+      components: {
+        'my-component': MyComponent
+      }
+    })
+  </script>
+  <style>
+    .my-comp {
+      width: 300px;
+      background-color: bisque;
+      border: 1px solid orange;
+      border-radius: 5px;
+      padding: 5px;
+    }
+  </style>
+</body>
+
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>컴포넌트 연습문제</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+  <h1>컴포넌트를 숫자로 표현</h1>
+  <div id="app">
+    <comp v-for="item in myArray" :count="item"></comp>
+  </div>
+
+  <script>
+    const Comp = {
+      template: `<h3>{{count}} 은 {{check}} 입니다.</h3>`,
+      props: {
+        count: Number,
+        check: String
+      }, computed: {
+        check: function () {
+          if (this.count % 2 == 0) {
+            return this.check = '짝수'
+          } else {
+            return this.check = '홀수'
+          }
+        }
+      }
+    }
+    new Vue({
+      el: '#app',
+      data: {
+        myArray: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+      }
+      , components: {
+        'comp': Comp
+      }
+    })
+  </script>
+  <hr>
+
+  <div id="app2">
+    <!-- new Vue() -->
+    <input v-model="name">
+    <!-- today , my-name 속성에 각각의 값을 넣는다 -->
+    <name_comp :today="200+15" :my-name="name"></name_comp>
+    <!-- 리스트를 = 로 넣을 수도 있다. ( 배열 ?) -->
+    <name_comp v-bind="dataList"></name_comp>
+    <name_comp my-name="또치" :today="100"></name_comp>
+    <name_comp my-name="12.5"></name_comp>
+  </div>
+
+  <script>
+    const nameComp = {
+      template: `<p> {{today+1}}, 나는 {{myName}}입니다.</p>`,
+      props: {
+        myName: String,
+        today: {
+          type: Number,
+          default: -1
+        }
+      }
+    }
+    new Vue({
+      el: '#app2',
+      data: {
+        name: '',
+        array: {
+          myName: 22,
+          today: 205
+        },
+        computed: {
+          dataList: function () {
+            return {
+              myName: this.name, // myName 키값에 넣는다 
+              today: Date.now() // today 키값에 넣는다
+            }
+          }
+        }
+      },
+      components: {
+        'name_comp': nameComp
+      }
+    })
+  </script>
+</body>
+
+</html>

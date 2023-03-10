@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>props 두번째</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <comp my-name="하나"></comp> <!-- html에서 표현하는 방법 -->
+    <comp my-name="두울"></comp>
+    <comp></comp>
+  </div>
+
+  <script>
+    const Comp = {
+      template: `
+                  <p>나는 {{myName}} 입니다.</p>
+                `,
+      // props:['']
+      props: {
+        myName: String // 자바스크립트에서 표현하는것 ( 카멜 )
+      },
+      created: function () { // Vue 인스턴스 생성 후 실행
+        if (this.myName == null) { // myName이 없는 컴포넌트가 있다면 실행한다.
+          this.myName = '열하나'
+        }
+      }
+    }
+    new Vue({
+      el: '#app',
+      components: {
+        'comp': Comp
+      }
+    })
+  </script>
+
+  <hr>
+  <hr>
+  <hr>
+  <hr>
+
+  <div id="app2">
+    <!--                   new Vue의 배열 -->
+    <comp v-for="(item, idx) in myArray" :my-name="item"></comp>
+  </div>
+
+  <script>
+    const Comp2 = {
+      template: `<p>나는 {{myName}} 입니다</p>`,
+      props: {
+        myName: String
+      },
+      created: function () {
+        if (this.myName == null) {
+          this.myName = '메롱'
+        }
+      }
+    }
+    new Vue({
+      el: '#app2',
+      data: {
+        myArray: ['넌', '누구', '니']
+      }
+      , components: {
+        'comp': Comp2
+      }
+    })
+  </script>
+</body>
+
+</html>

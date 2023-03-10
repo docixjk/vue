@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>compEmit 해보기</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    {{counter}}<br>
+    <!-- 여기서 사용하는 것은 new Vue에 있는것-->
+    <button @click="incrementCounter">카운터 증가</button>
+    <!-- Comp가 부모의 incrementCounter를 사용하도록 설정 -->
+    <comp v-on:increment-me="incrementCounter"></comp>
+    <cnt-comp v-on:count-up="incrementCounter"></cnt-comp>
+
+  </div>
+  <script>
+    const cntComp = {
+      template: `
+                <div>
+                  <input v-model='countData'>
+                  <button @click='counting'>
+                    {{countData}}
+                  </button>
+                </div>
+              `,
+      data: function () {
+        return {
+          countData: 0 // 자식입장의 카운터
+        }
+      },
+      methods: {
+        // 본인 것 카운팅 하는거
+        counting: function () {
+          this.countData++;
+        }
+      },
+      watch: {
+        // button 안에 들어있는 숫자 !
+        countData: function () {
+          // 본인 카운팅 하면서 watch때문에 같이 올라감
+          // v-on:count-up="incrementCounter"
+          this.$emit('count-up')
+        }
+      }
+    }
+
+    const Comp = {
+      template: `<div>
+        <button @click="childIncrementCounter">
+          자식으로 부터 증가
+          </button>
+          </div>`,
+      methods: {
+        childIncrementCounter() {
+          // 자식이 부모를 사용하고 싶어서 요청하는 거
+          // incrementCounter -> v-on:increment-me -> this.$emit -> childIncrementCounter
+          // 자식 버튼을 누르면 결국 부모의 함수를 불러와서 실행된다
+          // $emit : 부모 컴포넌트 이벤트 발생
+          this.$emit('increment-me')
+        }
+      },
+    }
+    new Vue({
+      el: '#app',
+      data() {
+        return {
+          counter: 0
+        }
+      },
+      methods: {
+        incrementCounter() {
+          this.counter++;
+        }
+      },
+      components: {
+        'comp': Comp,
+        'cnt-comp': cntComp
+      }
+    })
+  </script>
+</body>
+
+</html>

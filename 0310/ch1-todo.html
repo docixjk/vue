@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>todolist</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <style>
+    #todo {
+      text-align: center;
+    }
+
+    #nav {
+      padding-top: 5px;
+      padding-bottom: 5px;
+      margin: 0 auto;
+      width: 500px;
+      background-color: aqua;
+    }
+
+    .donestyle {
+      text-decoration: line-through;
+      color: rgb(32, 32, 245);
+    }
+
+    #nav input {
+      width: 300px;
+      height: 25px;
+      text-align: center;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="todo">
+    <div id="nav">
+      <h2>To Do List</h2>
+      <!-- keyup.enter : Enter키가 올라갈때 뒤에 있는 함수를 실행 시키라는 뜻-->
+      <input type="text" v-model:trim="addText" v-on:keyup.enter="addToDo" placeholder="할일 작성">
+      <p>
+        <!-- 몇건 처리 했는지 / 객체의 수 -->
+        <span>{{remaining}} / {{todos.length}}</span>
+        <button @click="cleanToDo">처리완료삭제</button>
+      </p>
+    </div>
+    <!-- 한줄 한줄 출력하기 편하게 div 태그 이용-->
+    <div v-for="todo in todos"> <!-- done : false / true -->
+      <label>
+        <!-- 객체에 있는 값을 가져와 쓰기위해서 .done을 한다 -->
+        <input type="checkbox" v-model="todo.done">
+        <span :class="{donestyle:todo.done}">
+          {{todo.text}}
+        </span>
+        <button @click="del(todo)">삭제</button>
+      </label>
+    </div>
+    <br>
+
+  </div>
+  <script>
+    new Vue({
+      el: '#todo',
+      data: {
+        addText: '',
+        todos: [
+          // 키 / 벨류 형식으로 담겨짐 (오브젝트)
+          { done: false, text: '떡볶이 먹으러가기' },
+          { done: false, text: '영화 보러가기' }
+        ]
+      }, computed: {
+        remaining: function () {
+          // filter 함수의 조건에 따라 나온 결과값으로 새로운 배열을 만든다
+          return this.todos.filter(function (val) {
+            // val.done이 true 인것을 가져온다
+            return val.done;
+            // 그 가져온 값의 길이 (개수)
+          }).length;
+        }
+      }, methods: {
+        del: function (todo) {
+
+        }, addToDo: function () {
+          if (this.addText) {
+            this.todos.push({ done: false, text: this.addText });
+            this.addText = '';
+          }
+        }, cleanToDo: function () {
+          this.todos = this.todos.filter(function (val) {
+            // 할일이 끝나지 않은 것은 false를 갖고 있기 때문에 살린다
+            return val.done == false;
+          })
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>
