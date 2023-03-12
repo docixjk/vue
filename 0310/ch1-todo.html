@@ -20,41 +20,57 @@
       background-color: aqua;
     }
 
-    .donestyle {
-      text-decoration: line-through;
-      color: rgb(32, 32, 245);
-    }
-
     #nav input {
       width: 300px;
       height: 25px;
       text-align: center;
       border-radius: 5px;
     }
+
+    /* 아래에서 Vue에서 선언할때 쓸 클래스*/
+    .donestyle {
+      text-decoration: line-through;
+      color: rgb(32, 32, 245);
+    }
   </style>
 </head>
 
 <body>
+  <!-- new Vue로 선언할 div -->
   <div id="todo">
+
     <div id="nav">
       <h2>To Do List</h2>
+      <!-- v-model은 내가 값을 바로바로 넣어줄때 사용하는거 -->
       <!-- keyup.enter : Enter키가 올라갈때 뒤에 있는 함수를 실행 시키라는 뜻-->
-      <input type="text" v-model:trim="addText" v-on:keyup.enter="addToDo" placeholder="할일 작성">
+      <!-- v-model.trim = 앞, 뒤 공백을 제거한다. -->
+      <input type="text" v-model.trim="addText" v-on:keyup.enter="addToDo" placeholder="할일 작성">
       <p>
         <!-- 몇건 처리 했는지 / 객체의 수 -->
         <span>{{remaining}} / {{todos.length}}</span>
+
+        <!-- Vue에서 선언할 onclick 이벤트 -->
         <button @click="cleanToDo">처리완료삭제</button>
       </p>
     </div>
+
     <!-- 한줄 한줄 출력하기 편하게 div 태그 이용-->
-    <div v-for="todo in todos"> <!-- done : false / true -->
+    <!-- for in / for of 같음 -->
+    <!-- vue 객체 안의 data에 선언된 todos를 하나씩 꺼내온다 -->
+    <div v-for="todo in todos">
       <label>
         <!-- 객체에 있는 값을 가져와 쓰기위해서 .done을 한다 -->
+        <!-- done : false / true 
+              체크박스에 체크가 되어있다면 true 아니면 false -->
         <input type="checkbox" v-model="todo.done">
+
+        <!-- span에 선언된클래스가 todo.done 에 의해서 꺼지거나 켜지거나 됨 -->
+        <!-- v-bind:class = :class 와 같은 뜻
+         donestyle 클래스의 존재 여부가 데이터 속성 todo.done 의 참 속성에 의해 결정되는 것을 의미 -->
         <span :class="{donestyle:todo.done}">
+          <!-- 출력 하는 데이터 값은 todo.text -->
           {{todo.text}}
         </span>
-        <button @click="del(todo)">삭제</button>
       </label>
     </div>
     <br>
@@ -70,6 +86,7 @@
           { done: false, text: '떡볶이 먹으러가기' },
           { done: false, text: '영화 보러가기' }
         ]
+        // return 값이 분명히 존재해야함 복잡한 로직을 사용할때 사용하면 좋다
       }, computed: {
         remaining: function () {
           // filter 함수의 조건에 따라 나온 결과값으로 새로운 배열을 만든다
@@ -80,11 +97,12 @@
           }).length;
         }
       }, methods: {
-        del: function (todo) {
-
-        }, addToDo: function () {
+        // 이벤트를 실행 시키면 실행되는 함수
+        addToDo: function () {
           if (this.addText) {
+            // 오브젝트 push로 추가하기 ( 맨 뒤 )
             this.todos.push({ done: false, text: this.addText });
+            // 비워두기
             this.addText = '';
           }
         }, cleanToDo: function () {

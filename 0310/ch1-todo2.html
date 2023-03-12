@@ -17,13 +17,7 @@
       padding-bottom: 5px;
       margin: 0 auto;
       width: 600px;
-      background-color: rgb(147, 247, 247);
-      border-bottom: 2px solid aqua;
-    }
-
-    .donestyle {
-      text-decoration: line-through;
-      color: rgb(32, 32, 245);
+      background-color: darkgray;
     }
 
     #nav input {
@@ -47,30 +41,36 @@
     #nav button {
       height: 35px;
       width: 150px;
-      border: 1px solid rgb(13, 159, 218);
       border-radius: 5px;
-      background-color: bisque;
+      background-color: rgb(0, 0, 0);
+      color: white;
       cursor: pointer;
     }
 
     #body button {
       height: 35px;
       width: 100px;
-      border: 1px solid rgb(13, 159, 218);
       border-radius: 5px;
-      background-color: bisque;
+      background-color: rgb(0, 0, 0);
+      color: white;
       cursor: pointer;
+    }
+
+    .donestyle {
+      text-decoration: line-through;
+      color: rgb(32, 32, 245);
     }
   </style>
 </head>
 
 <body>
   <div id="todo">
+
     <div id="nav">
       <h2>좀더 좋아진 To Do List</h2>
       <!-- keyup.enter : Enter키가 올라갈때 뒤에 있는 함수를 실행 시키라는 뜻-->
-      <input type="text" v-model:trim="addText" placeholder="할일 작성">
-      <input type="text" v-model:trim="addDate" v-on:keyup.enter="addToDo" placeholder="완료일(YYYYMMDD)">
+      <input type="text" v-model.trim="addText" placeholder="할일 작성">
+      <input type="text" v-model.trim="addDate" v-on:keyup.enter="addToDo" placeholder="완료일(YYYYMMDD)">
       <!-- 몇건 처리 했는지 / 객체의 수 -->
       <p>{{remaining}}건 중 {{todos.length}}건 처리 ,{{pastDay}} 완료일지남</p>
       <p>
@@ -80,18 +80,23 @@
       </p>
       <p>{{dday}}</p>
     </div>
+
     <div id="body">
       <!-- 한줄 한줄 출력하기 편하게 div 태그 이용-->
       <div v-for="(todo,idx) in todos" id="todo"> <!-- done : false / true -->
+
         <label>
           <!-- 객체에 있는 값을 가져와 쓰기위해서 .done을 한다 -->
           <input type="checkbox" v-model="todo.done">
           <span :class="{donestyle:todo.done}">
             {{todo.text}} ( 완료일 {{todo.date}} )
           </span>
+          <!-- 내가 지정한 data만 사용하기 위해 for in 에서 index 도 같이 생성해줌 -->
           <button @click="extension(idx)">완료일 연장</button>
         </label>
+
       </div>
+
     </div>
     <br>
 
@@ -122,12 +127,10 @@
             ((today.getMonth() + 1) < 9 ? "0" + (today.getMonth() + 1) : (today.getMonth() + 1)) +
             ((today.getDate()) < 9 ? "0" + (today.getDate()) : (today.getDate()));
           return this.dday = dateFormat;
-        }, pastDay: function (todos) {
-          for (let i = 0; i < todos.length; i++) {
-            return this.todos.filter(function (val) {
-              return this.todos[0].date < this.dday;
-            }.length)
-          }
+        }, pastDay: function () {
+          return this.todos.filter(function (val) {
+            return val.date < dday;
+          }).length;
         }
 
       }, methods: {

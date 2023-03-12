@@ -19,7 +19,9 @@
     <!-- my-component는 전역으로 선언하여 어디에서는 사용 가능하다-->
     <my-component></my-component>
     <!-- local-component은 지역으로 선언하여 해당 Vue에서만 사용 가능하다 -->
+    <!-- 여기서 선언된 local은 사용할 수 없음... new Vue app2에 선언하지 않아서 -->
     <local-component></local-component>
+    <!-- new Vue component에 직접 선언해 주어서 사용 가능 -->
     <instance-component></instance-component>
   </div>
   <script>
@@ -36,7 +38,7 @@
 
     // 지역 컴포넌트 선언 : 개별 vue 인스턴스에서 사용할 수 있는 컴포넌트
     // -> vue 생성 (new Vue) 할때 컴포넌트 등록해야 사용할 수 있다.
-    const component = {
+    const localComponent = {
       // 현재 const component(자식)은 new Vue(부모)에 붙어 있으니 부모와 자식 관계로도 볼 수 있다.
       template: `<div>안녕, 지역 컴포넌트</div>`
       // props
@@ -49,7 +51,7 @@
         aaa: 0
       }, components: {
         // local-component(html) == localComponent(JS)
-        'localComponent': component
+        'localComponent': localComponent
       }
     })
     new Vue({

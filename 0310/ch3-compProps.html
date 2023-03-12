@@ -104,7 +104,8 @@
   <hr>
   <br>
   <div id="app4">
-    <my-component :num="Mynumber" :str="passedString" :even="Mynumber" :obj="passedObject"></my-component>
+    <my-component :num="Mynumber" :str="passedString" :even="Mynumber" :validator="Mynumber"
+      :obj="passedObject"></my-component>
   </div>
 
   <script>
@@ -129,7 +130,8 @@
         even: {
           // 커스텀 검사
           validator: (value) => {
-            return (value % 2 == 0)
+            console.log(value % 2 == 0)
+            return value % 2 == 0 ? true : false;
           }
         }
       }
@@ -143,7 +145,7 @@
       data() {
         return {
           passedString: "안녕 부모로 부터!!",
-          Mynumber: 43,
+          Mynumber: 23,
           passedObject: { message: '넘겨준 객체' }
         }
       }

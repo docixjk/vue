@@ -11,6 +11,7 @@
 
 <body>
   <div id="app">
+    <!-- div#app > comp = cnt-comp -->
     {{counter}}<br>
     <!-- 여기서 사용하는 것은 new Vue에 있는것-->
     <button @click="incrementCounter">카운터 증가</button>
@@ -20,15 +21,39 @@
 
   </div>
   <script>
+    const Comp = {
+      // 자식에서 선언된 클릭 이벤트명은 다르다
+      template:
+        `
+        <div>
+          <button @click="childIncrementCounter">
+            자식으로 부터 증가
+          </button>
+        </div>
+      `,
+      methods: {
+        // 하지만 그 클릭이벤트가 참조하는 것은 div#app 즉 new Vue 클릭이벤트를 참조한다.
+        childIncrementCounter() {
+          // 자식이 부모를 사용하고 싶어서 요청하는 거
+          // incrementCounter -> v-on:increment-me -> this.$emit -> childIncrementCounter
+          // 자식 버튼을 누르면 결국 부모의 함수를 불러와서 실행된다
+          // $emit : 부모 컴포넌트 이벤트 발생
+          this.$emit('increment-me')
+        }
+      },
+    }
+
     const cntComp = {
-      template: `
-                <div>
-                  <input v-model='countData'>
-                  <button @click='counting'>
-                    {{countData}}
-                  </button>
-                </div>
-              `,
+      // 클릭이벤트를 참조는 하되 
+      template:
+        `
+        <div>
+          <input v-model='countData'>
+          <button @click='counting'>
+            {{countData}}
+          </button>
+        </div>
+      `,
       data: function () {
         return {
           countData: 0 // 자식입장의 카운터
@@ -50,22 +75,7 @@
       }
     }
 
-    const Comp = {
-      template: `<div>
-        <button @click="childIncrementCounter">
-          자식으로 부터 증가
-          </button>
-          </div>`,
-      methods: {
-        childIncrementCounter() {
-          // 자식이 부모를 사용하고 싶어서 요청하는 거
-          // incrementCounter -> v-on:increment-me -> this.$emit -> childIncrementCounter
-          // 자식 버튼을 누르면 결국 부모의 함수를 불러와서 실행된다
-          // $emit : 부모 컴포넌트 이벤트 발생
-          this.$emit('increment-me')
-        }
-      },
-    }
+
     new Vue({
       el: '#app',
       data() {
@@ -74,11 +84,13 @@
         }
       },
       methods: {
+        // 부모에 걸린 함수
         incrementCounter() {
           this.counter++;
         }
       },
       components: {
+        // 자식 comp를 둘다 선언해 주어야 사용 가능
         'comp': Comp,
         'cnt-comp': cntComp
       }
