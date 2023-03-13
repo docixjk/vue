@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>라우터</title>
+  <!-- Vue.js -->
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <!-- Vue router -->
+  <script src="/vue-router.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <h1>안녕 뷰 라우터</h1>
+
+    <p>
+      <!-- 기본 태그는 a tag 다 -->
+      <router-link to="/foo">가자 푸</router-link>
+      <router-link to="/bar">가자 바</router-link>
+    </p>
+    <!-- 라우터가 렌더링 될 부분을 정의하는거 -->
+    <!-- 각 컴포넌트들이 공통적으로 사용할 부분을 정의 -->
+    <router-view></router-view>
+  </div>
+
+  <script>
+    // 라우터에 사용할 컴포넌트 작성
+    const Foo = {
+      template:
+        `
+          <div>foo</div>
+        `
+    }
+
+    const Bar = {
+      template:
+        `
+          <div>bar</div>
+        `
+    }
+
+    // 해당경로에서 사용할 것을 정의
+    const routes = [
+      {
+        path: '/foo',
+        component: Foo
+      },
+      {
+        path: '/bar',
+        component: Bar
+      }
+    ]
+
+    // 라우터 인스턴스 생성
+    const router = new VueRouter({
+      routes
+    })
+
+    const app = new Vue({
+      el: '#app',
+      router: router
+    })
+
+    // Vue CLI -> 종종 쓰임
+    // const app = new Vue({
+    //     router
+    //   }).$mount('#app')
+    // 이 Vue를 어디에 마운트 할 것이냐 선언
+  </script>
+</body>
+
+</html>

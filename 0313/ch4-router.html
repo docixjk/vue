@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>라우터 연습</title>
+  <!-- Vue.js -->
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <!-- Vue router -->
+  <script src="/vue-router.js"></script>
+</head>
+
+<body>
+  <div id="app">
+
+    <!-- 기본 값은 a 태그 -->
+    <router-link to="/main">메인</router-link>
+
+    <!-- 버튼으로 바꿔보기 
+          다른 태크로 바꾸려면 taf="" 사용해서 바꿀 수 있음 -->
+    <router-link tag="button" to="/info">인포</router-link>
+
+    <router-link to="{name : 'userInfo'}">회원정보</router-link>
+    <!-- html에 설정한 값을 param 값을 준다 -->
+    <router-link tag="button" :to="{name:'user',params : {username:'erina'}}">buttonParam</router-link>
+
+    <router-view></router-view>
+  </div>
+  <script>
+    const mainComp = {
+      template: `<div><h1>메인페이지</h1></div>`
+    }
+    const infoComp = {
+      template: `<div><h3>정보페이지</h3></div>`
+    }
+
+    const router = new VueRouter({
+      routes: [
+        {
+          path: '/main',
+          component: mainComp
+        },
+        {
+          path: '/info',
+          component: infoComp
+        },
+        {
+          path: '/userInfo/:id/pwd/:pwd',
+          name: 'userInfo',
+          component: {
+            template:
+              `
+                <div>
+                  user {{this.$route.params.id}} <br>
+                  pwd {{this.$route.params.pwd}}
+                </div>`
+          }
+        },
+        {
+          path: '/users/:username',
+          name: 'user',
+          component: {
+            template:
+              `
+                <div>
+                  <p>
+                    유저 정보 : {{this.$route.params.username}}
+                  </p>
+                </div>
+              `,
+            props: ['username'],
+          },
+          // route 옵션에서 props로 데이터를 받아올 수 있도록 설정
+          props: true
+        }
+      ]
+    })
+
+    new Vue({
+      el: '#app',
+      router: router
+    })
+  </script>
+</body>
+
+</html>
