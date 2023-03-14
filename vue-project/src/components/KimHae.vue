@@ -1,0 +1,46 @@
+<template>
+  <div>
+    <button type="button" @click="getData">데이터 출력</button>
+    <table>
+      <thead>
+        <tr>
+          <th>추천코스</th>
+          <th>주소</th>
+          <th>가는길</th>
+          <th>사진</th>
+          <th>연락처</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="item in gimhaeArray" :key="item.idx">
+          <td>{{ item.name }}</td>
+          <td>{{ item.address }}</td>
+          <td>{{ item.content }}</td>
+          <td><img :src="item.images[0]" style="width: 100px" /><br /></td>
+          <td>{{ item.phone }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</template>
+<script>
+export default {
+  data() {
+    return {
+      gimhaeArray: {},
+    };
+  },
+  methods: {
+    getData() {
+      fetch(
+        "https://cors-anywhere.herokuapp.com/https://www.gimhae.go.kr/openapi/tour/tourinfo.do"
+      )
+        .then((res) => res.json())
+        .then((data) => {
+          this.gimhaeArray = data.results;
+          console.log(this.gimhaeArray);
+        });
+    },
+  },
+};
+</script>
